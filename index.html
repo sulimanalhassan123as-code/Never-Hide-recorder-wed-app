@@ -7,15 +7,21 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <h1>🎥 Never Hide Recorder</h1>
-  <p>Record your screen and upload automatically — powered by Suleiman Alhassan.</p>
+  <main class="container">
+    <h1>🎥 Never Hide Recorder</h1>
+    <p>Record your screen and upload automatically — <b>Powered by Suleiman Alhassan</b>.</p>
 
-  <button id="startBtn">Start Recording</button>
-  <button id="stopBtn" disabled>Stop Recording</button>
-  <div id="recording-indicator"></div>
+    <div class="controls">
+      <button id="startBtn">Start Recording</button>
+      <button id="stopBtn" disabled>Stop Recording</button>
+      <div id="recording-indicator"></div>
+    </div>
 
-  <h2>Uploaded Recordings</h2>
-  <ul id="recordingsList"></ul>
+    <section class="recordings">
+      <h2>Uploaded Recordings</h2>
+      <ul id="recordingsList"></ul>
+    </section>
+  </main>
 
   <footer>Powered by Suleiman Alhassan</footer>
 
