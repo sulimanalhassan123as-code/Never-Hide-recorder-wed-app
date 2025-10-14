@@ -1,0 +1,89 @@
+/* ========== GENERAL STYLES ========== */
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #f3f4f6, #dbeafe);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: #1f2937;
+}
+
+h1 {
+  color: #111827;
+  font-size: 2rem;
+  margin-top: 2rem;
+}
+
+h2 {
+  margin-top: 2rem;
+  color: #1e40af;
+}
+
+button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #1e3a8a;
+}
+
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #9ca3af;
+  width: 250px;
+  font-size: 1rem;
+}
+
+audio {
+  margin-top: 20px;
+  width: 90%;
+}
+
+/* ========== RECORDING STATUS ========== */
+#recording-indicator {
+  display: none;
+  width: 12px;
+  height: 12px;
+  background-color: red;
+  border-radius: 50%;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  box-shadow: 0 0 8px red;
+}
+
+/* ========== RECORDINGS LIST ========== */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin: 8px 0;
+}
+
+li a {
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+li a:hover {
+  text-decoration: underline;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
