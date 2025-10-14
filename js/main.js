@@ -1,104 +1,64 @@
-import { auth, storage } from './firebase.js';
-import {
-    sendSignInLinkToEmail,
-    isSignInWithEmailLink,
-    signInWithEmailLink
-} from "firebase/auth";
-import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
+import { storage, ref, uploadBytes, getDownloadURL, listAll } from "./firebase.js";
 
-const emailInput = document.getElementById('email');
-const loginBtn = document.getElementById('login-btn');
-
-if (loginBtn) {
-    loginBtn.addEventListener('click', () => {
-        const email = emailInput.value;
-        const actionCodeSettings = {
-            url: window.location.href.replace('index.html','recorder.html'),
-            handleCodeInApp: true
-        };
-        sendSignInLinkToEmail(auth, email, actionCodeSettings)
-            .then(() => {
-                window.localStorage.setItem('emailForSignIn', email);
-                alert('Email link sent! Check your inbox.');
-            })
-            .catch(console.error);
-    });
-}
-
-// Check if link clicked
-if (isSignInWithEmailLink(auth, window.location.href)) {
-    let email = window.localStorage.getItem('emailForSignIn');
-    if (!email) email = window.prompt('Please provide your email for confirmation');
-    signInWithEmailLink(auth, email, window.location.href)
-        .then((result) => {
-            alert('Successfully signed in!');
-            localStorage.removeItem('emailForSignIn');
-            window.location.href = 'recorder.html';
-        })
-        .catch(console.error);
-}
-
-// Recorder Logic
-const startBtn = document.getElementById('start-btn');
-const stopBtn = document.getElementById('stop-btn');
-const uploadBtn = document.getElementById('upload-btn');
-const audioPlayback = document.getElementById('audio-playback');
-const recordingsList = document.getElementById('recordings-list');
+const startBtn = document.getElementById("startBtn");
+const stopBtn = document.getElementById("stopBtn");
+const indicator = document.getElementById("recording-indicator");
+const recordingsList = document.getElementById("recordingsList");
 
 let mediaRecorder;
-let audioChunks = [];
+let chunks = [];
 
-if (startBtn) {
-    startBtn.addEventListener('click', async () => {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(stream);
-        mediaRecorder.start();
-        audioChunks = [];
+// Start recording screen
+startBtn.addEventListener("click", async () => {
+  const stream = await navigator.mediaDevices.getDisplayMedia({
+    video: true,
+    audio: true,
+  });
 
-        mediaRecorder.addEventListener('dataavailable', event => {
-            audioChunks.push(event.data);
-        });
+  mediaRecorder = new MediaRecorder(stream);
+  mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
 
-        startBtn.disabled = true;
-        stopBtn.disabled = false;
-    });
+  mediaRecorder.onstop = async () => {
+    const blob = new Blob(chunks, { type: "video/webm" });
+    const fileName = `recording_${Date.now()}.webm`;
+    const fileRef = ref(storage, "recordings/" + fileName);
 
-    stopBtn.addEventListener('click', () => {
-        mediaRecorder.stop();
+    await uploadBytes(fileRef, blob);
+    const url = await getDownloadURL(fileRef);
 
-        mediaRecorder.addEventListener('stop', () => {
-            const audioBlob = new Blob(audioChunks);
-            audioPlayback.src = URL.createObjectURL(audioBlob);
-            uploadBtn.disabled = false;
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="${url}" target="_blank">${fileName}</a>`;
+    recordingsList.appendChild(li);
 
-            uploadBtn.onclick = async () => {
-                const userId = auth.currentUser.uid;
-                const storageRef = ref(storage, `recordings/${userId}_${Date.now()}.webm`);
-                await uploadBytes(storageRef, audioBlob);
-                alert('Uploaded successfully!');
-                listRecordings();
-            };
-        });
+    chunks = [];
+  };
 
-        startBtn.disabled = false;
-        stopBtn.disabled = true;
-    });
+  mediaRecorder.start();
+  startBtn.disabled = true;
+  stopBtn.disabled = false;
+  indicator.style.display = "block";
+});
+
+// Stop recording
+stopBtn.addEventListener("click", () => {
+  mediaRecorder.stop();
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+  indicator.style.display = "none";
+});
+
+// Load existing recordings from Firebase
+async function loadRecordings() {
+  const folderRef = ref(storage, "recordings/");
+  const items = await listAll(folderRef);
+
+  recordingsList.innerHTML = "";
+  for (const item of items.items) {
+    const url = await getDownloadURL(item);
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="${url}" target="_blank">${item.name}</a>`;
+    recordingsList.appendChild(li);
+  }
 }
 
-// List recordings
-async function listRecordings() {
-    recordingsList.innerHTML = '';
-    const userId = auth.currentUser.uid;
-    const listRef = ref(storage, 'recordings/');
-    const res = await listAll(listRef);
-    res.items.forEach(async (itemRef) => {
-        if(itemRef.name.startsWith(userId)){
-            const url = await getDownloadURL(itemRef);
-            const li = document.createElement('li');
-            li.innerHTML = `<a href="${url}" target="_blank">${itemRef.name}</a>`;
-            recordingsList.appendChild(li);
-        }
-    });
-}
-
-if(auth.currentUser) listRecordings();
+loadRecordings();
