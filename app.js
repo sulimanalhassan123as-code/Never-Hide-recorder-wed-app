@@ -2,10 +2,10 @@ const serverList = document.getElementById('serverList');
 const connectBtn = document.getElementById('connectBtn');
 const statusBox = document.getElementById('statusBox');
 
-// Load real public VPN servers (VPNGate)
 async function loadServers() {
   try {
-    const response = await fetch('https://www.vpngate.net/api/iphone/');
+    // Using proxy to fix “Failed to load servers”
+    const response = await fetch('https://api.allorigins.win/raw?url=https://www.vpngate.net/api/iphone/');
     const text = await response.text();
 
     const lines = text.split('\n').filter(l => l.includes(','));
@@ -28,7 +28,6 @@ async function loadServers() {
 
 loadServers();
 
-// Simulate VPN connect
 connectBtn.addEventListener('click', () => {
   const selected = serverList.options[serverList.selectedIndex].text;
   statusBox.textContent = `Connecting to ${selected}...`;
