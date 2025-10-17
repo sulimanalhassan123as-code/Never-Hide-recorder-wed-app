@@ -1,31 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Never Hide Recorder</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Never Hide VPN</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="container">
-    <h1>🎥 Never Hide Recorder</h1>
-    <p>Record your screen and upload automatically — <b>Powered by Suleiman Alhassan</b>.</p>
+  <header>
+    <h1>🌐 Never Hide VPN</h1>
+    <p>Select a country and connect securely.</p>
+  </header>
 
-    <div class="controls">
-      <button id="startBtn">Start Recording</button>
-      <button id="stopBtn" disabled>Stop Recording</button>
-      <div id="recording-indicator"></div>
-    </div>
+  <main>
+    <select id="serverList">
+      <option>Loading servers...</option>
+    </select>
+    <button id="connectBtn">Connect</button>
 
-    <section class="recordings">
-      <h2>Uploaded Recordings</h2>
-      <ul id="recordingsList"></ul>
-    </section>
+    <div id="statusBox">Status: Not connected</div>
   </main>
 
-  <footer>Powered by Suleiman Alhassan</footer>
+  <footer>
+    <p>Powered by Suleiman Alhassan</p>
+  </footer>
 
-  <script type="module" src="js/firebase.js"></script>
-  <script type="module" src="js/main.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
