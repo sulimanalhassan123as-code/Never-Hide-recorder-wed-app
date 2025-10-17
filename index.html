@@ -1,30 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Never Hide VPN</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEVER HIDE VPN</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="icons/neverhide-logo.svg" type="image/svg+xml" />
 </head>
 <body>
-  <header>
-    <h1>🌐 Never Hide VPN</h1>
-    <p>Select a country and connect securely.</p>
+  <header class="header">
+    <img src="icons/neverhide-logo.svg" class="logo" alt="NEVER HIDE VPN">
+    <h1>NEVER HIDE VPN</h1>
+    <p>Secure connection — choose your country and connect</p>
   </header>
 
-  <main>
-    <select id="serverList">
-      <option>Loading servers...</option>
-    </select>
-    <button id="connectBtn">Connect</button>
-
-    <div id="statusBox">Status: Not connected</div>
+  <main class="main">
+    <button id="loadServers">🔄 Load VPN Servers</button>
+    <div id="serverList" class="server-list">Loading servers...</div>
+    <div id="status" class="status"></div>
   </main>
 
-  <footer>
-    <p>Powered by Suleiman Alhassan</p>
+  <footer class="footer">
+    <p>© 2025 NEVER HIDE VPN — Powered by Suleiman Alhassan</p>
   </footer>
 
   <script src="app.js"></script>
 </body>
-</html>
+  </html>
