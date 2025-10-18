@@ -1,29 +1,106 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NEVER HIDE VPN</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="icons/neverhide-logo.svg" type="image/svg+xml" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Suleiman Cyber System</title>
+  <meta name="theme-color" content="#0e7b6b">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="header">
-    <img src="icons/neverhide-logo.svg" class="logo" alt="NEVER HIDE VPN">
-    <h1>NEVER HIDE VPN</h1>
-    <p>Secure connection — choose your country and connect</p>
-  </header>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">🛡️</div>
+        <div>
+          <h1>SULEIMAN CYBER SYSTEM</h1>
+          <p class="sub">Cybersecurity & Ethical Hacking — Learn step-by-step with an AI assistant</p>
+        </div>
+      </div>
+      <nav>
+        <button id="btnCatalog">Catalog</button>
+        <button id="btnMyWork">My Work</button>
+        <button id="btnForum">Community</button>
+        <button id="btnSettings">Settings</button>
+      </nav>
+    </header>
 
-  <main class="main">
-    <button id="loadServers">🔄 Load VPN Servers</button>
-    <div id="serverList" class="server-list">Loading servers...</div>
-    <div id="status" class="status"></div>
-  </main>
+    <main id="main">
+      <!-- Assistant panel (stepwise) -->
+      <aside id="assistant" class="assistant card">
+        <div id="assistantMessages" class="assistant-messages">
+          <!-- messages inserted here -->
+        </div>
+        <div id="assistantControls" class="assistant-controls">
+          <!-- controls inserted here -->
+        </div>
+      </aside>
 
-  <footer class="footer">
-    <p>© 2025 NEVER HIDE VPN — Powered by Suleiman Alhassan</p>
-  </footer>
+      <!-- Welcome -->
+      <div id="welcomeCard" class="card center">
+        <h2>Welcome to Suleiman Cyber System</h2>
+        <p id="welcomeQuestion">Are you a beginner or do you have prior knowledge in cybersecurity?</p>
+        <div class="row">
+          <button class="pill" data-level="beginner">Beginner</button>
+          <button class="pill" data-level="intermediate">Some knowledge</button>
+          <button class="pill" data-level="advanced">Advanced</button>
+        </div>
+        <div class="muted">The assistant will guide you step-by-step. You decide when to continue.</div>
+      </div>
 
-  <script src="app.js"></script>
+      <!-- Catalog -->
+      <section id="catalog" class="hidden">
+        <h2>Course Catalog</h2>
+        <div id="coursesGrid" class="grid"></div>
+      </section>
+
+      <!-- Course viewer -->
+      <section id="courseView" class="hidden">
+        <button id="backToCatalog" class="link">← Back to Catalog</button>
+        <div id="courseContent"></div>
+      </section>
+
+      <!-- My Work -->
+      <section id="myWork" class="hidden">
+        <h2>My Work & Certificates</h2>
+        <div id="submissionsList"></div>
+        <div id="certList"></div>
+      </section>
+
+      <!-- Forum -->
+      <section id="forum" class="hidden">
+        <h2>Community Forum</h2>
+        <div id="forumForm">
+          <input id="forumName" placeholder="Your name (or anonymous)" />
+          <textarea id="forumMsg" placeholder="Write a message / question..."></textarea>
+          <button id="postMsg">Post</button>
+        </div>
+        <div id="forumList"></div>
+      </section>
+
+      <!-- Settings -->
+      <section id="settings" class="hidden">
+        <h2>Settings</h2>
+        <div class="card">
+          <label>AI Mode (simulated):</label>
+          <select id="aiMode">
+            <option value="sim">Simulated (default)</option>
+            <option value="api">Use External AI (needs key)</option>
+          </select>
+          <div id="apiKeyRow" class="hidden">
+            <input id="aiKey" placeholder="Paste your AI API key here (saved locally)" />
+            <button id="saveKey">Save key</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <small>© 2025 Suleiman Cyber System — Powered by Suleiman Alhassan — Contact: <a href="mailto:sulleyalhassan.178.as@gmail.com">sulleyalhassan.178.as@gmail.com</a></small>
+    </footer>
+  </div>
+
+  <script type="module" src="app.js"></script>
 </body>
   </html>
